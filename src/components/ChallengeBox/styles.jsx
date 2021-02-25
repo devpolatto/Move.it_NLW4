@@ -16,6 +16,76 @@ export const Container = styled.div`
     text-align: center;
 `
 
+export const ChallengetActive = styled.div`
+    height:100%;
+
+    display: flex;
+    flex-direction: column;
+
+    header{
+        color: var(--blue);
+        font-weight: 600;
+        font-size: 1.25rem;
+        padding: 0 2rem 1.5rem;
+        border-bottom: 1px solid var(--gray-line)
+    }
+
+    main{
+        flex: 1;
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+
+        strong{
+            font-size: 2rem;
+            font-weight: 600;
+            color: var(--title);
+            margin: 1.5rem 1rem;
+        }
+
+        p{
+            line-height: 1.5;
+        }
+    }
+
+    footer{
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+
+        button{
+            height: 3rem;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border: 0;
+            border-radius: 5px;
+
+            color: var(--white);
+
+            font-size: 1rem;
+            font-weight: 600;
+
+            transition: filter 0.2s;
+
+            :hover{
+                filter: brightness(0.9);
+            }
+        }
+
+        .succeededButton{
+            background: var(--green);
+        }
+        .failedButton{
+            background: var(--red)
+        }
+    }
+`
+
 export const ChallengeNotActive = styled.div`
     border: ${props => props.isActive ? '1px solid red' : '1px solid blue' };
     display: flex;
@@ -39,3 +109,4 @@ export const ChallengeNotActive = styled.div`
         margin-bottom: 1rem;
     }
 `
+
