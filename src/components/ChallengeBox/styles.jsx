@@ -87,7 +87,7 @@ export const ChallengetActive = styled.div`
 `
 
 export const ChallengeNotActive = styled.div`
-    border: ${props => props.isActive ? '1px solid red' : '1px solid blue' };
+    /* border: ${props => props.isActive ? '1px solid red' : '1px solid blue' }; */
     display: flex;
     flex-direction: column;
     align-items: center;

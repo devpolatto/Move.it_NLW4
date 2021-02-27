@@ -23,9 +23,9 @@ export const Header = styled.div`
         background: var(--green)
     }
 
-    span.current-experience {
+    .current-experience {
         position: absolute;
-        top: 50px;
+        top: 12px;
         transform: translateX(-50%)
     }
 
