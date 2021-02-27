@@ -5,8 +5,8 @@ import GlobalStyles from '../styles/GlobalStyles';
 function MyApp({ Component, pageProps }) {
   return(
     <ChallengesProvider>
-      <GlobalStyles/>
-      <Component {...pageProps} />
+        <GlobalStyles/>
+        <Component {...pageProps} />
     </ChallengesProvider>
   );
 }
