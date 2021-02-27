@@ -1,4 +1,4 @@
-import { createContext, ReactNode, useContext, useState } from 'react'
+import { createContext, ReactNode, useContext, useEffect, useState } from 'react'
 
 import challengesJson from '../../challenges.json';
 
@@ -34,6 +34,11 @@ export function ChallengesProvider({ children }: challengesProviderProps){
     // Calculo de atualização de experiancia do usuario
     const experienceToNextLevel = Math.pow((level + 1) * 4, 2)
 
+    // Pedindo permissão para mandar notificações
+    useEffect(()=>{
+        Notification.requestPermission()
+    }, [])
+
     function levelUp(){
         setLevel(level + 1);
     };
@@ -41,8 +46,16 @@ export function ChallengesProvider({ children }: challengesProviderProps){
     function startNewChallenge(){
         const ramdomChallengIndex = Math.floor(Math.random() * challengesJson.length);
         const challenge = challengesJson[ramdomChallengIndex];
-        // console.log(challenge);
         setActiveChallenge(challenge)
+
+        // Notificando o usario
+        new Audio('/notification.mp3').play();
+
+        if(Notification.permission === 'granted'){
+            new Notification('Novo Desafio!!',{
+                body: `Valendo ${challenge.amount}xp!`,
+            })
+        }
     };
 
     function resetChallenge(){
@@ -67,6 +80,7 @@ export function ChallengesProvider({ children }: challengesProviderProps){
         setActiveChallenge(null);
         setChallengesCompleted(challengesCompleted + 1);
     }
+
     return(
         <ChallengesContext.Provider value={{
             level, 
