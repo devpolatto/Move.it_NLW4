@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import Head from 'next/head'
 import { GetServerSideProps } from 'next';
 
@@ -16,45 +17,47 @@ interface HomeProps {
   challengesCompleted: number;
 }
 
-export default function Home(props) {
+export default function Home(props: HomeProps) {
+
 
   return (
-    <ChallengesProvider 
-      level={props.level} 
-      currentExperience={props.currentExperience}
-      challengesCompleted={props.challengesCompleted}
-      >
-      <div className="containerApp">
-        <Head><title>Inicio | move.it</title></Head>
-        <ExperienceBar/>
+      <ChallengesProvider 
+        level={props.level} 
+        currentExperience={props.currentExperience}
+        challengesCompleted={props.challengesCompleted}
+        >
+        <div className="containerApp">
+          <Head><title>Inicio | move.it</title></Head>
+          <ExperienceBar/>
 
-        <CountdownProvider>
-          <section>
-            <div>
-              <Profile/>
-              <CompletedChallenges/>
-              <Countdown/>
-            </div>
-            <div>
-              <ChallengeBox/>
-            </div>
-          </section>
-        </CountdownProvider>
-      
-      </div>
-    </ChallengesProvider>
+          <CountdownProvider>
+            <section>
+              <div>
+                <Profile/>
+                <CompletedChallenges/>
+                <Countdown/>
+              </div>
+              <div>
+                <ChallengeBox/>
+              </div>
+            </section>
+          </CountdownProvider>
+        
+        </div>
+      </ChallengesProvider>
   );
 }
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   
-  const { level, currentExperience, challengeCompleted } = ctx.req.cookies;
+  const { level, currentExperience, challengeCompleted, theme } = ctx.req.cookies;
 
   return{
     props: {
       level: Number(level),
       currentExperience: Number(currentExperience),
       challengesCompleted: Number(challengeCompleted),
+      theme: String(theme),
     }
   };
 }

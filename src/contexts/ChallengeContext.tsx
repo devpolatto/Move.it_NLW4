@@ -5,6 +5,9 @@ import Cookies from 'js-cookie';
 import challengesJson from '../../challenges.json';
 import { LevelUpModal } from '../components/LevelUpModal';
 
+import light from '../styles/themes/light';
+import dark from '../styles/themes/dark';
+
 interface ChallengesContext {
     level: number;
     currentExperience: number;
@@ -16,6 +19,8 @@ interface ChallengesContext {
     resetChallenge: () => void;
     completChallenge: () => void;
     closeLevelUpModal: () => void;
+    toggleTheme: () => void;
+    theme: Theme;
 }
 interface Challenge{
     type: 'body' | 'eye';
@@ -29,6 +34,20 @@ interface challengesProviderProps{
     challengesCompleted: number;
 }
 
+interface Theme {
+    title: string;
+    colors: {
+        primary: string;
+        secundary: string;
+        background: string;
+        text: string;
+        switchIcon: {
+            offColor: string;
+            onColor: string;
+        };
+    };
+}
+
 export const ChallengesContext = createContext({} as ChallengesContext);
 
 export function ChallengesProvider({ children, ...rest }: challengesProviderProps){
@@ -40,6 +59,9 @@ export function ChallengesProvider({ children, ...rest }: challengesProviderProp
     const [ activeChallenge, setActiveChallenge ] = useState(null);
     const [ isLevelModalOpen, setIsLevelModalOpen ] = useState(false)
 
+    const [theme, setTheme] = useState(light);
+    const [ themeTitle, setThemeTitle ] = useState(Cookies.get('theme'))
+
     // Calculo de atualização de experiancia do usuario
     const experienceToNextLevel = Math.pow((level + 1) * 4, 2)
 
@@ -48,7 +70,7 @@ export function ChallengesProvider({ children, ...rest }: challengesProviderProp
         Notification.requestPermission()
     }, [])
 
-    // alvando informações no Cookies
+    // salvando informações no Cookies
     useEffect(() => {
         Cookies.set('level', String(level));
         Cookies.set('currentExperience', String(currentExperience));
@@ -102,6 +124,12 @@ export function ChallengesProvider({ children, ...rest }: challengesProviderProp
         setChallengesCompleted(challengesCompleted + 1);
     }
 
+    // alterando o tema da aplicação
+    function toggleTheme() {
+        setTheme(theme.title === 'light' ? dark : light);
+        Cookies.set('theme', theme.title)
+    }
+
     return(
         <ChallengesContext.Provider value={{
             level, 
@@ -114,6 +142,8 @@ export function ChallengesProvider({ children, ...rest }: challengesProviderProp
             resetChallenge,
             completChallenge,
             closeLevelUpModal,
+            toggleTheme,
+            theme,
             }}
         >
 

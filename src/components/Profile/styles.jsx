@@ -17,7 +17,7 @@ export const Container = styled.div`
     div strong {
         font-size: 1.5rem;
         font-weight: 600;
-        color: var(--title);
+        color: ${props => props.theme.colors.text};
     }
 
     div p{
@@ -27,6 +27,12 @@ export const Container = styled.div`
 
     div p img{
         margin-right: 0.5rem;
+    }
+
+    .sublite{
+        display: flex;
+        justify-content: space-between;
+
     }
 
 `
