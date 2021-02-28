@@ -1,4 +1,5 @@
 import Head from 'next/head'
+import { GetServerSideProps } from 'next';
 
 import { CountdownProvider } from '../contexts/CountdownContext';
 
@@ -8,7 +9,10 @@ import { CompletedChallenges } from '../components/CompletedChallenges';
 import { Countdown } from '../components/Countdown';
 import { ChallengeBox } from '../components/ChallengeBox';
 
-export default function Home() {
+export default function Home(props) {
+
+  console.log(props)
+
   return (
     <div className="containerApp">
       <Head><title>Inicio | move.it</title></Head>
@@ -29,4 +33,17 @@ export default function Home() {
       
     </div>
   );
+}
+
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  
+  const { level, currentExperience, challengeCompleted } = ctx.req.cookies;
+
+  return{
+    props: {
+      level,
+      currentExperience,
+      challengeCompleted,
+    }
+  };
 }
