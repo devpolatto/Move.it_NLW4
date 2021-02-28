@@ -22,15 +22,19 @@ interface Challenge{
 }
 interface challengesProviderProps{
     children: ReactNode;
+    level: number;
+    currentExperience: number;
+    challengesCompleted: number;
 }
 
 export const ChallengesContext = createContext({} as ChallengesContext);
 
-export function ChallengesProvider({ children }: challengesProviderProps){
+export function ChallengesProvider({ children, ...rest }: challengesProviderProps){
 
-    const [ level, setLevel ] = useState(1);
-    const [ currentExperience, setcurrentExperience ] = useState(0);
-    const [ challengesCompleted, setChallengesCompleted ] = useState(0)
+    const [ level, setLevel ] = useState(rest.level ?? 1);
+    const [ currentExperience, setcurrentExperience ] = useState(rest.currentExperience ?? 0);
+    const [ challengesCompleted, setChallengesCompleted ] = useState(rest.challengesCompleted ?? 0)
+
     const [ activeChallenge, setActiveChallenge ] = useState(null);
 
     // Calculo de atualização de experiancia do usuario

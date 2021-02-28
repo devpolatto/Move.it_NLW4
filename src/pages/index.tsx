@@ -1,6 +1,7 @@
 import Head from 'next/head'
 import { GetServerSideProps } from 'next';
 
+import { ChallengesProvider } from '../contexts/ChallengeContext'
 import { CountdownProvider } from '../contexts/CountdownContext';
 
 import ExperienceBar from '../components/ExperienceBar';
@@ -9,29 +10,39 @@ import { CompletedChallenges } from '../components/CompletedChallenges';
 import { Countdown } from '../components/Countdown';
 import { ChallengeBox } from '../components/ChallengeBox';
 
+interface HomeProps {
+  level: number;
+  currentExperience: number;
+  challengesCompleted: number;
+}
+
 export default function Home(props) {
 
-  console.log(props)
-
   return (
-    <div className="containerApp">
-      <Head><title>Inicio | move.it</title></Head>
-      <ExperienceBar/>
+    <ChallengesProvider 
+      level={props.level} 
+      currentExperience={props.currentExperience}
+      challengesCompleted={props.challengesCompleted}
+      >
+      <div className="containerApp">
+        <Head><title>Inicio | move.it</title></Head>
+        <ExperienceBar/>
 
-      <CountdownProvider>
-        <section>
-          <div>
-            <Profile/>
-            <CompletedChallenges/>
-            <Countdown/>
-          </div>
-          <div>
-            <ChallengeBox/>
-          </div>
-        </section>
-      </CountdownProvider>
+        <CountdownProvider>
+          <section>
+            <div>
+              <Profile/>
+              <CompletedChallenges/>
+              <Countdown/>
+            </div>
+            <div>
+              <ChallengeBox/>
+            </div>
+          </section>
+        </CountdownProvider>
       
-    </div>
+      </div>
+    </ChallengesProvider>
   );
 }
 
@@ -41,9 +52,9 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 
   return{
     props: {
-      level,
-      currentExperience,
-      challengeCompleted,
+      level: Number(level),
+      currentExperience: Number(currentExperience),
+      challengesCompleted: Number(challengeCompleted),
     }
   };
 }
