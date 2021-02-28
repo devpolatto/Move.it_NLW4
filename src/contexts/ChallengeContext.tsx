@@ -60,7 +60,7 @@ export function ChallengesProvider({ children, ...rest }: challengesProviderProp
     const [ isLevelModalOpen, setIsLevelModalOpen ] = useState(false)
 
     const [theme, setTheme] = useState(light);
-    const [ themeTitle, setThemeTitle ] = useState(Cookies.get('theme'))
+    // const [ themeTitle, setThemeTitle ] = useState(Cookies.get('theme'))
 
     // Calculo de atualização de experiancia do usuario
     const experienceToNextLevel = Math.pow((level + 1) * 4, 2)
